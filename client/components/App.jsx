@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import '../styles/index.css'
 
 
-function App () {
+
+const App = () => {
+
+  const [colourArrangement, setColourArrangement] = useState([])
 
   const width = 8
   const candyColours = [
@@ -20,15 +24,27 @@ function App () {
         const randomColour = candyColours[Math.floor(Math.random() * candyColours.length)]
         randomColourArrangement.push(randomColour)
       }
-      console.log(randomColourArrangement)
+      setColourArrangement(randomColourArrangement)
   }
 
-  createBoard()
+  // Prevents infinte loop 
+  useEffect(() => {
+    createBoard()
+  },[])
 
-
+  console.log(colourArrangement)
 
   return (
       <div className='app'> 
+        <div className="game-container">
+          {colourArrangement.map((colour, index) => {
+            return( 
+              <img 
+                style={{backgroundColor: colour}}
+                key={index}
+              />)
+          })}    
+        </div>
       </div> 
   )
 }
