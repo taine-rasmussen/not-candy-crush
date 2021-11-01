@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import '../styles/index.css'
 
 
-function App () {
+
+const App = () => {
 
   const [colourArrangement, setColourArrangement] = useState([])
 
@@ -28,14 +30,21 @@ function App () {
   // Prevents infinte loop 
   useEffect(() => {
     createBoard()
-  },[] )
+  },[])
 
   console.log(colourArrangement)
 
- 
-
   return (
       <div className='app'> 
+        <div className="game-container">
+          {colourArrangement.map((colour, index) => {
+            return( 
+              <img 
+                style={{backgroundColor: colour}}
+                key={index}
+              />)
+          })}    
+        </div>
       </div> 
   )
 }
