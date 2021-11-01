@@ -1,0 +1,74 @@
+☐ SETUP the project
+  ☐ `npm i`
+  ☐ `npm run dev` OR start debugger (CMD+P `debug node`)
+
+# BACKEND
+☐ setup database
+  ☐ `npm run knex migrate:make artists`
+  ☐ `npm run knex migrate:make albums`
+  ☐ `npm run knex seed:make artists`
+  ☐ `npm run knex seed:make albums`
+  ☐ write migrations
+    ☐ artists
+    ☐ albums
+  ☐ write seeds
+    ☐ artists
+    ☐ albums 
+☐ write db functions
+  ☐ artists
+    ☐ READ - get a list of all albums
+    ☐ READ - get a single album
+    ☐ CREATE - add a new album (returns the new record)
+    ☐ UPDATED - update an existing album by ID (returns the updated record)
+    ☐ DELETE - delete an album by ID
+  ☐ albums
+    ☐ READ - get a list of all artists
+    ☐ READ - get a single artist
+    ☐ CREATE - add a new artist (returns the new record)
+    ☐ UPDATED - update an existing artist by ID (returns the updated record)
+    ☐ DELETE - delete an artist by ID
+
+☐ Write routes
+  ☐ artists - /api/v1/artists
+    ☐ CREATE - `.post()` route to add an artist
+    ☐ READ - `.get()` route to get all artists
+    ☐ READ - `.get()` route to get a single artist
+    ☐ UPDATE - `.patch()` route to update a single record
+    ☐ DELETE - `.delete()` route to delete a single artist
+  ☐ albums - /api/v1/albums
+    ☐ CREATE - `.post()` route to add an album
+    ☐ READ - `.get()` route to get all albums
+    ☐ READ - `.get()` route to get a single album
+    ☐ UPDATE - `.patch()` route to update a single record
+    ☐ DELETE - `.delete()` route to delete a single album
+
+#FRONTEND
+
+☐ Actions - create types (for reducers)
+☐ Reducers
+  ☐ artists
+    ☐ SET_ARTISTS
+    ☐ UPDATE_ARTIST
+    ☐ CREATE_ARTIST
+    ☐ DELETE_ARTIST
+  ☐ albums
+    ☐ SET_ALBUMS
+    ☐ UPDATE_ALBUM
+    ☐ CREATE_ALBUM
+    ☐ DELETE_ALBUM
+☐ Front end APIs
+  ☐ Artists
+    ☐ CREATE - `.post()` route to add an artist
+    ☐ READ - `.get()` route to get all artists
+    ☐ READ - `.get()` route to get a single artist
+    ☐ UPDATE - `.patch()` route to update a single record
+    ☐ DELETE - `.delete()` route to delete a single artist
+  ☐ albums - /api/v1/albums
+    ☐ CREATE - `.post()` route to add an album
+    ☐ READ - `.get()` route to get all albums
+    ☐ READ - `.get()` route to get a single album
+    ☐ UPDATE - `.patch()` route to update a single record
+    ☐ DELETE - `.delete()` route to delete a single album
+☐ Actions
+
+  
