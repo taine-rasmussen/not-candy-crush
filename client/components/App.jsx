@@ -82,6 +82,17 @@ const App = () => {
       }
    }
 
+
+   const moveIntoSquareBelow = () => {
+     for (let i = 0; i < 64 - width; i++) {
+
+      if (colourArrangement[i + width] === ''){
+        colourArrangement[i + width] = colourArrangement[i]
+        colourArrangement[i] = ''
+      }
+     }
+   }
+
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
     const randomColourArrangement = []
@@ -103,10 +114,11 @@ const App = () => {
       checkForRowOfFour()
       checkForColumnOfThree()
       checkForRowOfThree()
+      moveIntoSquareBelow()
       setColourArrangement([...colourArrangement])
-    }, 100)
+    }, 500)
     return () => clearInterval(timer)
-  }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree ])
+  }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow ])
 
   console.log(colourArrangement)
 
