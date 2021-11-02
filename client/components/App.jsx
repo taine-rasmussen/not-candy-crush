@@ -39,6 +39,21 @@ const App = () => {
     }
   }
 
+  // Exact same as above Func but checking column of four instead of three
+  const checkForColumnOfFour = () => {
+    for (let i = 0; i < 39; i++){
+
+      // Contains index of cell i, cell directly below i & below that again
+      const columnOfFour = [i, i + width, i + width * 2, i + width * 3]
+      const decidedColour = [colourArrangement[i]]
+
+      // Checks if all cells match the colour of the first cell
+      if (columnOfFour.every(cell => colourArrangement[cell] == decidedColour)){
+        columnOfFour.forEach(square => colourArrangement[square] = ' ')
+      }
+    }
+  }
+
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
     const randomColourArrangement = []
@@ -56,11 +71,12 @@ const App = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
+       checkForColumnOfFour()
       checkForColumnOfThree()
       setColourArrangement([...colourArrangement])
     }, 100)
     return () => clearInterval(timer)
-  }, [checkForColumnOfThree, colourArrangement])
+  }, [checkForColumnOfFour, colourArrangement, checkForColumnOfThree ])
 
   console.log(colourArrangement)
 
