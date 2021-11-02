@@ -60,7 +60,7 @@ const App = () => {
       setColourArrangement([...colourArrangement])
     }, 100)
     return () => clearInterval(timer)
-  }, [checkForColumnOfThree])
+  }, [checkForColumnOfThree, colourArrangement])
 
   console.log(colourArrangement)
 
