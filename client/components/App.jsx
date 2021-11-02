@@ -39,6 +39,7 @@ const App = () => {
       // Checks if all cells match the colour of the first cell
       if (columnOfThree.every(cell => colourArrangement[cell] == decidedColour)){
         columnOfThree.forEach(square => colourArrangement[square] = '')
+        return true
       }
     }
   }
@@ -54,6 +55,7 @@ const App = () => {
       // Checks if all cells match the colour of the first cell
       if (columnOfFour.every(cell => colourArrangement[cell] == decidedColour)){
         columnOfFour.forEach(cell => colourArrangement[cell] = '')
+        return true
       }
     }
   }
@@ -68,6 +70,7 @@ const App = () => {
 
          if (rowOfFour.every(cell => colourArrangement[cell] == decidedColour)){
             rowOfFour.forEach(cell => colourArrangement[cell] = '')
+            return true
          }
       }
    }
@@ -82,6 +85,7 @@ const App = () => {
 
          if (rowOfThree.every(cell => colourArrangement[cell] == decidedColour)){
             rowOfThree.forEach(cell => colourArrangement[cell] = '')
+            return true
          }
       }
    }
@@ -122,6 +126,28 @@ const App = () => {
 
     colourArrangement[cellBeingDraggedId] = cellBeingReplaced.style.backgroundColor
     colourArrangement[cellBeingReplacedId] = cellBeingDragged.style.backgroundColor
+
+    const validMoves = [
+            cellBeingDraggedId - 1,
+            cellBeingDraggedId - width,
+            cellBeingDraggedId + 1,
+            cellBeingDraggedId + width
+          ]
+    const validMove = validMoves.includes(cellBeingReplacedId)
+
+    const isAColumnOfFour = checkForColumnOfFour()
+    const isARowOfFour = checkForRowOfFour()
+    const isAColumnOfThree = checkForColumnOfThree()
+    const isARowOfThree = checkForRowOfThree()
+
+    if (cellBeingReplacedId && validMove && (isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree)) {
+      setCellBeingDragged(null)
+      setCellBeingReplaced(null)
+    } else {
+      colourArrangement[cellBeingReplacedId] = cellBeingReplaced.style.backgroundColor  
+      colourArrangement[cellBeingDraggedId] = cellBeingDragged.style.backgroundColor
+      setColourArrangement([...colourArrangement])
+    }
   }
 
   // Fills array with random arrangement of colours from candyColours to size of game board.
@@ -147,7 +173,7 @@ const App = () => {
       checkForRowOfThree()
       moveIntoSquareBelow()
       setColourArrangement([...colourArrangement])
-    }, 250)
+    }, 100)
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow ])
 
