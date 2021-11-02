@@ -1,12 +1,13 @@
 import React, {useState,  useEffect } from 'react'
 import '../styles/index.css'
+import ScoreBoard from './ScoreBoard'
 
 const App = () => {
    
   const [colourArrangement, setColourArrangement] = useState([])
   const [cellBeingDragged, setCellBeingDragged] = useState(null)
   const [cellBeingReplaced, setCellBeingReplaced] = useState(null)
-
+  const [scoreDisplay, setScoreDisplay] = useState(0)
 
 
   const width = 8
@@ -18,6 +19,38 @@ const App = () => {
     'orange',
     'yellow'
   ] 
+  const checkForRowOfFour = () => {
+      for (let i = 0; i < 64; i++) {
+         const rowOfFour = [i, i + 1, i + 2, i + 3]
+         const decidedColour = [colourArrangement[i]]
+         const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64]
+
+         if (notValid.includes(i)) continue
+
+         if (rowOfFour.every(cell => colourArrangement[cell] == decidedColour)){
+            setScoreDisplay(scoreDisplay + 4)
+            rowOfFour.forEach(cell => colourArrangement[cell] = '')
+            return true
+         }
+      }
+   }
+
+  // Exact same as above Func but checking column of four instead of three
+  const checkForColumnOfFour = () => {
+    for (let i = 0; i <= 39; i++){
+
+      // Contains index of cell i, cell directly below i & below that again
+      const columnOfFour = [i, i + width, i + width * 2, i + width * 3]
+      const decidedColour = [colourArrangement[i]]
+
+      // Checks if all cells match the colour of the first cell
+      if (columnOfFour.every(cell => colourArrangement[cell] == decidedColour)){
+        setScoreDisplay(scoreDisplay + 4)
+        columnOfFour.forEach(cell => colourArrangement[cell] = '')
+        return true
+      }
+    }
+  }
 
   // Checks cell and the two cells below it for matches
   // If grid size changes update "47" to index of cell located on the right edge 3 rows up from the bottom.
@@ -30,42 +63,12 @@ const App = () => {
 
       // Checks if all cells match the colour of the first cell
       if (columnOfThree.every(cell => colourArrangement[cell] == decidedColour)){
+        setScoreDisplay(scoreDisplay + 3)
         columnOfThree.forEach(square => colourArrangement[square] = '')
         return true
       }
     }
   }
-
-  // Exact same as above Func but checking column of four instead of three
-  const checkForColumnOfFour = () => {
-    for (let i = 0; i <= 39; i++){
-
-      // Contains index of cell i, cell directly below i & below that again
-      const columnOfFour = [i, i + width, i + width * 2, i + width * 3]
-      const decidedColour = [colourArrangement[i]]
-
-      // Checks if all cells match the colour of the first cell
-      if (columnOfFour.every(cell => colourArrangement[cell] == decidedColour)){
-        columnOfFour.forEach(cell => colourArrangement[cell] = '')
-        return true
-      }
-    }
-  }
-
-  const checkForRowOfFour = () => {
-      for (let i = 0; i < 64; i++) {
-         const rowOfFour = [i, i + 1, i + 2, i + 3]
-         const decidedColour = [colourArrangement[i]]
-         const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64]
-
-         if (notValid.includes(i)) continue
-
-         if (rowOfFour.every(cell => colourArrangement[cell] == decidedColour)){
-            rowOfFour.forEach(cell => colourArrangement[cell] = '')
-            return true
-         }
-      }
-   }
 
    const checkForRowOfThree = () => {
       for (let i = 0; i < 64; i++) {
@@ -76,6 +79,7 @@ const App = () => {
          if (notValid.includes(i)) continue
 
          if (rowOfThree.every(cell => colourArrangement[cell] == decidedColour)){
+            setScoreDisplay(scoreDisplay + 3)
             rowOfThree.forEach(cell => colourArrangement[cell] = '')
             return true
          }
@@ -174,6 +178,7 @@ const App = () => {
 
   return (
       <div className='app'> 
+      <ScoreBoard score={scoreDisplay} />
         <div className="game-container">
           {colourArrangement.map((colour, index) => {
             return( 
