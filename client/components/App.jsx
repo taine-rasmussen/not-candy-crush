@@ -116,6 +116,7 @@ const App = () => {
   }
 
   // Swaps bg colour value of cell being dragged with cell being replaced
+  // Checks if move being made is valid
   const dragEnd = () => {
     const cellBeingDraggedId = parseInt(cellBeingDragged.getAttribute('data-id'))
     const cellBeingReplacedId = parseInt(cellBeingReplaced.getAttribute('data-id'))
@@ -154,7 +155,6 @@ const App = () => {
         randomColourArrangement.push(randomColour)
       }
       setColourArrangement(randomColourArrangement)
-      // console.log(blueCandy)
   }
 
   // Prevents infinte loop 
@@ -173,8 +173,6 @@ const App = () => {
     }, 100)
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow ])
-
-  // console.log(colourArrangement)
 
   return (
       <div className='app'> 
