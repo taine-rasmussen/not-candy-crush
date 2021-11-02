@@ -11,7 +11,11 @@ import '../styles/index.css'
   // Func that updates candy after section is cleared
 
 const App = () => {
+   
   const [colourArrangement, setColourArrangement] = useState([])
+  const [cellBeingDragged, setCellBeingDragged] = useState(null)
+  const [cellBeingReplaced, setCellBeingReplaced] = useState(null)
+
 
   const width = 8
   const candyColours = [
@@ -26,7 +30,7 @@ const App = () => {
   // Checks cell and the two cells below it for matches
   // If grid size changes update "47" to index of cell located on the right edge 3 rows up from the bottom.
   const checkForColumnOfThree = () => {
-    for (let i = 0; i < 47; i++){
+    for (let i = 0; i <= 47; i++){
 
       // Contains index of cell i, cell directly below i & below that again
       const columnOfThree = [i, i + width, i + width * 2]
@@ -41,7 +45,7 @@ const App = () => {
 
   // Exact same as above Func but checking column of four instead of three
   const checkForColumnOfFour = () => {
-    for (let i = 0; i < 39; i++){
+    for (let i = 0; i <= 39; i++){
 
       // Contains index of cell i, cell directly below i & below that again
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3]
@@ -101,6 +105,25 @@ const App = () => {
     }
   }
 
+  // Updates state with value of cell clicked on to be dragged
+  const dragStart = (e) => {
+    setCellBeingDragged(e.target)
+  }
+
+  // Updates state with value of cell being dragged over to be replaced
+  const dragDrop = (e) => {
+    setCellBeingReplaced(e.target)
+  }
+
+  // Swaps bg colour value of cell being dragged with cell being replaced
+  const dragEnd = () => {
+    const cellBeingDraggedId = parseInt(cellBeingDragged.getAttribute('data-id'))
+    const cellBeingReplacedId = parseInt(cellBeingReplaced.getAttribute('data-id'))
+
+    colourArrangement[cellBeingDraggedId] = cellBeingReplaced.style.backgroundColor
+    colourArrangement[cellBeingReplacedId] = cellBeingDragged.style.backgroundColor
+  }
+
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
     const randomColourArrangement = []
@@ -128,7 +151,7 @@ const App = () => {
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow ])
 
-  console.log(colourArrangement)
+  // console.log(colourArrangement)
 
   return (
       <div className='app'> 
@@ -144,6 +167,9 @@ const App = () => {
                 onDragOver={(e) => e.preventDefault()}
                 onDragEnter={(e) => e.preventDefault()}
                 onDragLeave={(e) => e.preventDefault()}
+                onDragStart={dragStart}
+                onDrop={dragDrop}
+                onDragEnd={dragEnd}
               />)
           })}    
         </div>
@@ -152,3 +178,5 @@ const App = () => {
 }
 
 export default App
+
+
