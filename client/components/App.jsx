@@ -82,16 +82,24 @@ const App = () => {
       }
    }
 
+  // Checks if cell below is blank, if true moves coloured cell down board and blank up
+  const moveIntoSquareBelow = () => {
+    for (let i = 0; i < 64 - width; i++) {
+      const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
+      const isFirstRow = firstRow.includes(i)
 
-   const moveIntoSquareBelow = () => {
-     for (let i = 0; i < 64 - width; i++) {
+      // Handles cells at top of board with nothing to replace - generates new random colour
+      if (isFirstRow && colourArrangement[i] === '') {
+        let randomNumber = Math.floor(Math.random() * candyColours.length)
+        colourArrangement[i] = candyColours[randomNumber]
+      }
 
       if (colourArrangement[i + width] === ''){
         colourArrangement[i + width] = colourArrangement[i]
         colourArrangement[i] = ''
       }
-     }
-   }
+    }
+  }
 
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
@@ -116,7 +124,7 @@ const App = () => {
       checkForRowOfThree()
       moveIntoSquareBelow()
       setColourArrangement([...colourArrangement])
-    }, 500)
+    }, 1000)
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow ])
 
