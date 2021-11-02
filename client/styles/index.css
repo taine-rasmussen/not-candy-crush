@@ -15,7 +15,8 @@ body {
   height: 560px;
   display: flex;
   flex-wrap: wrap;
-  border: 4px solid #000;
+  border: 8px solid #000;
+  border-radius: 10px;
 }
 
 .game-container img {

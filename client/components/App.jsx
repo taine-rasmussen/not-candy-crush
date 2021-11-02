@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/index.css'
 
-
+// ToDo
+  // Score game
+  // Restart game
+  // Candy can be moved one square in any of the four directions providing not going past game border
+  // Func that checks if move is succseful or not
+  // Func that updates candy after section is cleared
 
 const App = () => {
+
 
   const [colourArrangement, setColourArrangement] = useState([])
 
@@ -15,7 +21,23 @@ const App = () => {
     'orange',
     'purple',
     'yellow',
-  ]
+  ] 
+
+  // Checks cell and the two cells below it for matches
+  // If grid size changes update "47" to index of cell located on the right edge 3 rows up from the bottom.
+  const checkForColumnOfThree = () => {
+    for (let i = 0; i < 47; i++){
+
+      // Contains index of cell i, cell directly below i & below that again
+      const columnOfThree = [i, i + width, i + width * 2]
+      const decidedColour = [colourArrangement[i]]
+
+      // Checks if all cells match the colour of the first cell
+      if (columnOfThree.every(cell => colourArrangement[cell] == decidedColour)){
+        columnOfThree.forEach(square => currentColorArrangement[square] = '')
+      }
+    }
+  }
 
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
@@ -32,6 +54,14 @@ const App = () => {
     createBoard()
   },[])
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      checkForColumnOfThree()
+      setColourArrangement([...colourArrangement])
+    }, 100)
+    return () => clearInterval(timer)
+  }, [checkForColumnOfThree])
+
   console.log(colourArrangement)
 
   return (
@@ -42,6 +72,7 @@ const App = () => {
               <img 
                 style={{backgroundColor: colour}}
                 key={index}
+                alt={colour}
               />)
           })}    
         </div>
