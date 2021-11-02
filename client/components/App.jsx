@@ -124,7 +124,7 @@ const App = () => {
       checkForRowOfThree()
       moveIntoSquareBelow()
       setColourArrangement([...colourArrangement])
-    }, 1000)
+    }, 250)
     return () => clearInterval(timer)
   }, [checkForColumnOfFour, checkForRowOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow ])
 
@@ -138,7 +138,12 @@ const App = () => {
               <img 
                 style={{backgroundColor: colour}}
                 key={index}
+                data-id={index}
                 alt={colour}
+                draggable={true}
+                onDragOver={(e) => e.preventDefault()}
+                onDragEnter={(e) => e.preventDefault()}
+                onDragLeave={(e) => e.preventDefault()}
               />)
           })}    
         </div>
