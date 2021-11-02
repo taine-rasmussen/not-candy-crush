@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState,  useEffect } from 'react'
 import '../styles/index.css'
+
+
 
 // ToDo
   // Score game
@@ -9,8 +11,6 @@ import '../styles/index.css'
   // Func that updates candy after section is cleared
 
 const App = () => {
-
-
   const [colourArrangement, setColourArrangement] = useState([])
 
   const width = 8
@@ -54,33 +54,33 @@ const App = () => {
     }
   }
 
-    const checkForRowOfThree = () => {
-        for (let i = 0; i < 64; i++) {
-            const rowOfThree = [i, i + 1, i + 2]
-            const decidedColour = [colourArrangement[i]]
-            const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64]
+  const checkForRowOfFour = () => {
+      for (let i = 0; i < 64; i++) {
+         const rowOfFour = [i, i + 1, i + 2, i + 3]
+         const decidedColour = [colourArrangement[i]]
+         const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64]
 
-            if (notValid.includes(i)) continue
+         if (notValid.includes(i)) continue
 
-            if (rowOfThree.every(cell => colourArrangement[cell] == decidedColour)){
-            rowOfThree.forEach(cell => colourArrangement[cell] = '')
-          }
-        }
-    }
-
-      const checkForRowOfFour = () => {
-        for (let i = 0; i < 64; i++) {
-            const rowOfFour = [i, i + 1, i + 2, i + 3]
-            const decidedColour = [colourArrangement[i]]
-            const notValid = [5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53, 54, 55, 62, 63, 64]
-
-            if (notValid.includes(i)) continue
-
-            if (rowOfFour.every(cell => colourArrangement[cell] == decidedColour)){
+         if (rowOfFour.every(cell => colourArrangement[cell] == decidedColour)){
             rowOfFour.forEach(cell => colourArrangement[cell] = '')
-          }
-        }
-    }
+         }
+      }
+   }
+
+   const checkForRowOfThree = () => {
+      for (let i = 0; i < 64; i++) {
+         const rowOfThree = [i, i + 1, i + 2]
+         const decidedColour = [colourArrangement[i]]
+         const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64]
+
+         if (notValid.includes(i)) continue
+
+         if (rowOfThree.every(cell => colourArrangement[cell] == decidedColour)){
+            rowOfThree.forEach(cell => colourArrangement[cell] = '')
+         }
+      }
+   }
 
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
