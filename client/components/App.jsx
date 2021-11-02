@@ -34,7 +34,7 @@ const App = () => {
 
       // Checks if all cells match the colour of the first cell
       if (columnOfThree.every(cell => colourArrangement[cell] == decidedColour)){
-        columnOfThree.forEach(square => colourArrangement[square] = ' ')
+        columnOfThree.forEach(square => colourArrangement[square] = '')
       }
     }
   }
@@ -49,10 +49,24 @@ const App = () => {
 
       // Checks if all cells match the colour of the first cell
       if (columnOfFour.every(cell => colourArrangement[cell] == decidedColour)){
-        columnOfFour.forEach(square => colourArrangement[square] = ' ')
+        columnOfFour.forEach(cell => colourArrangement[cell] = '')
       }
     }
   }
+
+    const checkForRowOfThree = () => {
+        for (let i = 0; i < 64; i++) {
+            const rowOfThree = [i, i + 1, i + 2]
+            const decidedColour = [colourArrangement[i]]
+            const notValid = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64]
+
+            if (notValid.includes(i)) continue
+
+            if (rowOfThree.every(cell => colourArrangement[cell] == decidedColour)){
+            rowOfThree.forEach(cell => colourArrangement[cell] = '')
+          }
+        }
+    }
 
   // Fills array with random arrangement of colours from candyColours to size of game board.
   const createBoard = () => {
@@ -71,12 +85,13 @@ const App = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-       checkForColumnOfFour()
+      checkForColumnOfFour()
       checkForColumnOfThree()
+      checkForRowOfThree()
       setColourArrangement([...colourArrangement])
     }, 100)
     return () => clearInterval(timer)
-  }, [checkForColumnOfFour, colourArrangement, checkForColumnOfThree ])
+  }, [checkForColumnOfFour, colourArrangement, checkForColumnOfThree, checkForRowOfThree ])
 
   console.log(colourArrangement)
 
