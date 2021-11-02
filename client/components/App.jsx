@@ -34,7 +34,7 @@ const App = () => {
 
       // Checks if all cells match the colour of the first cell
       if (columnOfThree.every(cell => colourArrangement[cell] == decidedColour)){
-        columnOfThree.forEach(square => currentColorArrangement[square] = '')
+        columnOfThree.forEach(square => colourArrangement[square] = ' ')
       }
     }
   }
@@ -60,7 +60,7 @@ const App = () => {
       setColourArrangement([...colourArrangement])
     }, 100)
     return () => clearInterval(timer)
-  }, [checkForColumnOfThree])
+  }, [checkForColumnOfThree, colourArrangement])
 
   console.log(colourArrangement)
 
