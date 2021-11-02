@@ -1,15 +1,6 @@
 import React, {useState,  useEffect } from 'react'
 import '../styles/index.css'
 
-
-
-// ToDo
-  // Score game
-  // Restart game
-  // Candy can be moved one square in any of the four directions providing not going past game border
-  // Func that checks if move is succseful or not
-  // Func that updates candy after section is cleared
-
 const App = () => {
    
   const [colourArrangement, setColourArrangement] = useState([])
@@ -17,14 +8,15 @@ const App = () => {
   const [cellBeingReplaced, setCellBeingReplaced] = useState(null)
 
 
+
   const width = 8
   const candyColours = [
-    'red',
-    'green',
     'blue',
-    'orange',
+    'green',
+    'red',
     'purple',
-    'yellow',
+    'orange',
+    'yellow'
   ] 
 
   // Checks cell and the two cells below it for matches
@@ -158,6 +150,7 @@ const App = () => {
         randomColourArrangement.push(randomColour)
       }
       setColourArrangement(randomColourArrangement)
+      // console.log(blueCandy)
   }
 
   // Prevents infinte loop 
@@ -184,11 +177,10 @@ const App = () => {
         <div className="game-container">
           {colourArrangement.map((colour, index) => {
             return( 
-              <img 
+              <div 
                 style={{backgroundColor: colour}}
                 key={index}
                 data-id={index}
-                alt={colour}
                 draggable={true}
                 onDragOver={(e) => e.preventDefault()}
                 onDragEnter={(e) => e.preventDefault()}
@@ -196,7 +188,7 @@ const App = () => {
                 onDragStart={dragStart}
                 onDrop={dragDrop}
                 onDragEnd={dragEnd}
-              />)
+              ></div>)
           })}    
         </div>
       </div> 
